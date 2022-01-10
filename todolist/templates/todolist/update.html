@@ -1,0 +1,32 @@
+{% extends 'todolist/base.html' %} {% block content %}
+<div class="container bg-light p-5 text-center mt-5">
+  <form method="post">
+    {% csrf_token %}
+    <!-- {{todoEditForm.errors}} -->
+    <div class="container text-center">
+      <div class="row">
+        <div class="col form-control m-2 p-2">
+          Title: {{todoEditForm.title}}
+        </div>
+
+        <br />
+      </div>
+      <div class="row mt-2">
+        <div class="col form-control m-2 p-2">
+          Category: <br />
+          {{todoEditForm.category}}
+        </div>
+        <div class="col form-control m-2 p-2">
+          Created date: {{todoEditForm.created}}
+        </div>
+        <div class="col form-control m-2 p-2">
+          Due date: <br />
+          {{todoEditForm.dueDate}}
+        </div>
+        <br />
+      </div>
+    </div>
+    <button type="submit" class="btn btn-secondary mt-2">Update</button>
+  </form>
+</div>
+{% endblock content %}

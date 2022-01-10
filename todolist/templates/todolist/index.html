@@ -1,0 +1,166 @@
+{% extends 'todolist/base.html' %} {% block content %}
+<div class="container p-3 border">
+  <h2 class="text-center">Todo App</h2>
+  <div class="container bg-light p-5 text-center">
+    <form method="post">
+      {% csrf_token %}
+      <!-- {{todo_form.errors}} -->
+      <div class="container text-center">
+        <div class="row">
+          <div class="col form-control m-2 p-2">Title: {{todo_form.title}}</div>
+
+          <br />
+        </div>
+        <div class="row mt-2">
+          <div class="col form-control m-2 p-2">
+            Category: <br />
+            {{todo_form.category}}
+          </div>
+          <div class="col form-control m-2 p-2">
+            Created date: {{todo_form.created}}
+          </div>
+          <div class="col form-control m-2 p-2">
+            Due date: <br />
+            {{todo_form.dueDate}}
+          </div>
+          <br />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-secondary mt-2">Submit</button>
+    </form>
+  </div>
+  <hr />
+  <div class="container p-5 bg-light">
+    <ol>
+      {% for todo in todos %}
+
+      <li>
+        {% if todo.important == False %}
+        <div class="container border bg-white p-3">
+          {% if todo.completed == True %}
+          <div class="d-flex justify-content-between">
+            <strike>{{todo.title}}</strike>
+            <div>
+              <a
+                class="btn btn-outline-danger btn-sm"
+                href="{% url 'important' todo.id %}"
+                >Unimportant</a
+              >
+
+              <a
+                class="btn btn-outline-danger btn-sm"
+                href="{% url 'completed' todo.id %}"
+                >Incomplete</a
+              >
+              <button
+                disabled="disabled"
+                class="btn btn-sm btn-{{todo.category}}"
+              >
+                {{todo.category}}
+              </button>
+            </div>
+          </div>
+          <br />
+          <i class="fa fa-calendar-check-o">
+            {{todo.created}} - {{todo.dueDate}}
+          </i>
+          {% else %}
+          <div class="d-flex justify-content-between">
+            {{todo.title}}
+            <div>
+              <a
+                class="btn btn-outline-danger btn-sm"
+                href="{% url 'important' todo.id %}"
+                >Unimportant</a
+              >
+              <a
+                class="btn btn-outline-success btn-sm"
+                href="{% url 'completed' todo.id %}"
+                >Complete</a
+              >
+              <button
+                disabled="disabled"
+                class="btn btn-sm btn-{{todo.category}}"
+              >
+                {{todo.category}}
+              </button>
+            </div>
+          </div>
+          <br />
+          <i class="fa fa-calendar-check-o">
+            {{todo.created}} - {{todo.dueDate}}
+          </i>
+          {% endif %}
+        </div>
+        {% else %}
+        <div class="container border bg-white p-3">
+          {% if todo.completed == True %}
+          <div class="d-flex justify-content-between">
+            <strike>{{todo.title}}</strike>
+            <div>
+              <a
+                class="btn btn-danger btn-sm"
+                href="{% url 'important' todo.id %}"
+                >Important</a
+              >
+              <a
+                class="btn btn-outline-danger btn-sm"
+                href="{% url 'completed' todo.id %}"
+                >Incomplete</a
+              >
+              <button
+                disabled="disabled"
+                class="btn btn-sm btn-{{todo.category}}"
+              >
+                {{todo.category}}
+              </button>
+            </div>
+          </div>
+          <br />
+          <i class="fa fa-calendar-check-o">
+            {{todo.created}} - {{todo.dueDate}}
+          </i>
+          {% else %}
+          <div class="d-flex justify-content-between">
+            {{todo.title}}
+            <div>
+              <a
+                class="btn btn-danger btn-sm"
+                href="{% url 'important' todo.id %}"
+                >Important</a
+              >
+              <a
+                class="btn btn-outline-success btn-sm"
+                href="{% url 'completed' todo.id %}"
+                >Complete</a
+              >
+              <button
+                disabled="disabled"
+                class="btn btn-sm btn-{{todo.category}}"
+              >
+                {{todo.category}}
+              </button>
+            </div>
+          </div>
+          <br />
+          <i class="fa fa-calendar-check-o">
+            {{todo.created}} - {{todo.dueDate}}
+          </i>
+          {% endif %}
+        </div>
+        {% endif %}
+        <div class="container mt-2">
+          <a class="btn btn-sm btn-info" href="{% url 'update' todo.id %}"
+            >Update</a
+          >
+          <a class="btn btn-sm btn-danger" href="{% url 'delete' todo.id %}"
+            >Delete</a
+          >
+        </div>
+      </li>
+      <hr />
+      {% endfor %}
+    </ol>
+  </div>
+</div>
+{% endblock content %}
